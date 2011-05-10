@@ -81,13 +81,25 @@ For (1) or (2), the JavaScript uses a cross-domain request (XDM) and walks throu
 
 For (3), the user is alerted via popup, and given the option to load the resource from the current host or from a different node. XXX user choice here is lame
 
+Images and Binary Resources
++++++++++++++++++++++++++++
+Images and other binary resources, including PDFs, videos, etc. pose a challenge. Signature checking code cannot be executed by such resources. To compensate, binary data may be embedded directly in HTML using *data:* URLs or `MHTML`_ for older versions of Internet Explorer. Further investigation is needed to determine if these methods can be used for all binary formats, such as video and audio.
+
+Embedding cannot be used for binary formats requiring an external viewer, such as PDFs. Such resources need to be downloaded twice - once to check the signature in Javascript and once to load into a viewer. This introduces a "time of check to time of use" vulnerability, where an adversary can provide a valid resource for the first load and a compromised one for the second (which is actually viewed). This attack can be mitigated using a "cut-to-choose" technique (basically, the resource is loaded few times, most of which are signature checks and one of which is viewed, giving a high confidence of validity).
+
+Alternately, PDFs could be converted to HTML using `pdftohtml`_. Large files such as video pose a particular challenge, as the entire content must be loaded into memory to perform signature checks.
+
 Obfuscation
 +++++++++++
-Obfuscation is introduced to thwart content-aware filtering at the network level. A second keypair (the "obfuscation keys") are added; the private key is stored on the mirror. Resources are non-semantically mutated in a unique way for each node (by introducing spaces between HTML tags, say). By encrypting a mutated resource, the raw bytes transmitted by a particular node will be totally different than any other. The client JavaScript loads the resource and replaces the page body with the decrypted version. Similar results may be achieved for binary formats (images, video) by flipping a single bit. Note that this encryption provides only obfuscation, not security (as the publicly-accessible mirror has the private key),
+Obfuscation is introduced to thwart content-aware filtering at the network level. All filenames are hashed and links rewritten. The files are then doubly encrypted. The client JavaScript loads the resource and replaces the page body with the decrypted version.
+
+An inner layer of encryption uses an unique keypair (the "instance keys") for each *instance* of a document on a mirror; no two copies of a resource have the same instance key. This guarrantees that the ciphertext sent over the wire by a particular mirror for a given resource are different than those sent by any other mirror. The private instance key is prefixed to the ciphertext. 
+
+An outer layer of encryption uses a unique keypair (the "resource keys") for each document. The private key is appened to the anchor (hash) of URLs referring to the resource. It is transmitted in documents that *link* to the resource, but not with the resource itself. As anchors are not transmitted by browsers in HTTP requests, this outer encryption further complicates filtering. Censors can no longer examine HTTP requests in isolation to detect WTP traffic, as would be the case if only the inner encryption is used. Rather, they must run a complete, stateful implementation of WTP.   
+
+Note these techniques provide only obfuscation, not security (as publicly-accessible mirrors have the private keys). It may be possible to detect the presence of ciphertext sent over HTTP (by looking for a high degree of randomness); steganography could be employed in this case.
 
 The JavaScript itself cannot be so encrypted, as it would need to decrypt itself. Instead, existing JS obfuscaters can be used, ideally ones which take a user-provided seed.
-
-The filenames of common resources may also be varied, including those of the WTP JavaScript itself. Such files could be found by examining the index.html at a mirror root.
 
 Proof of Authorship
 ++++++++++++++++++++++
@@ -112,7 +124,7 @@ Updates
 +++++++
 By signing the content tarball using author keys (described in `Proof of Authorship`_), the party creator gains the ability to update content in the future. To update a party, the author creates an update tarball with new/changed files and a manifest of deletions. This file is signed using the author private key, and the tarball and signature are served through BitTorrent as described above. WTPnet can download this new torrent, verify the signature and update the mirrors as necessary. Note that the public author key can be included in the torrent and need not be uploaded to an external keyserver.
 
-Community
+Social Mirroring
 +++++++++++++++++
 Several difficulties arise from a fully-automated mirroring system. There may be more content than hosting space available. Some content may expose mirror owners to local legal or political liability. The existence of free storage is an attractive target for spammers and trolls.
 
@@ -157,6 +169,8 @@ Open Questions/Issues
 .. _`HBGary leaks site`: http://hbgary.anonleaks.ch/
 .. _`DMCA takedown notice`: http://en.wikipedia.org/wiki/Online_Copyright_Infringement_Liability_Limitation_Act#Takedown_example
 .. _`deep packet inspection`: http://en.wikipedia.org/wiki/Deep_packet_inspection
+.. _`MHTML`: http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
+.. _`pdftohtml`: http://pdftohtml.sourceforge.net
 .. _`The Pirate Bay`: http://thepiratebay.org/
 .. _`Reddit`: http://reddit.com/
 .. _`WikiLeaks mirrors`: http://wikileaks.ch/Mirrors.html
