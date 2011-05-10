@@ -28,12 +28,38 @@ WTP does not specify how to securely find an initial entry node. Rather, users f
 
 Finally WTP may result in a slightly slower browsing experience, as resources may need to be loaded multiple times. This is faster than completely unavailable, and therefore acceptable.
 
-========
-Censors
-========
-The task of a censor is complicated by WTP. Takedowns and blocking are more difficult because of the large number of mirrors, in multiple jurisdictions. The colocation of censorable and inoffensive content on the same server may make coarse blocking or domain seizure less appealing. The use of cryptographic signing makes hijacking a WTP session impossible.
+===================
+Threat Model
+===================
+WTP is resistant to a variety of different threats. As an entirely open system, some attacks cannot be completely prevented. In these cases, WTP aims to raise the technical and economic costs of disabling the mirror network.
 
-Since the list of mirrors is public, it is relatively easy to map the extent of the network (once the censor understands how the system operates). Hopefully, new mirrors can be added quickly enough to stay ahead. Censors may run mirrors themselves as honeypots, to collect IPs and other user data.
+Legal challenges
+++++++++++++++++
+Censors may cause content to be removed from a host using the legal system, such as `DMCA takedown notices`_.  WTP makes such takedowns impossible or costly, by utilizing a large number of hosts in multiple legal jurisdictions (some of which may be immune to takedowns). Attempts at domain seizure face similar challenges, and are further complicated by the co-hosting of targeted and innocuous content. 
+
+Hostname & IP blocking
+++++++++++++++++++++++
+Network operators may block traffic to particular IP addresses or hostnames. WTP resist such coarse filtering with the use of a large number of hosts. The ease with which new mirrors may be added should help party operators stay ahead of censors. Standby mirrors may be pre-loaded with content but not published, ready to be brought online quickly if the need arises.
+
+Protocol filtering
+++++++++++++++++++
+Network operators can block traffic using particular protocols (most commonly SSL, but also TOR & VPN). This form of coarse filtering has been observed in China and Iran. WTP only utilizes plain HTTP, making such efforts ineffective.  
+
+Deep packet inspection
+++++++++++++++++++++++
+Network operators have blocked traffic based on semantic content using `deep packet inspection`_. Traffic can be blocked or monitored on the basis of particular keywords, such as "revolution". WTP obfuscates content through the use of encryption and filename mutation. All filenames are replaced with hashes. Each instance of a mirrored resource is encrypted with a different key, so that filtering on the basis of ciphertext is no longer possible. In the unlikely (expensive) event that HTTP traffic is monitored for anything that looks like ciphertext, steganography could be used to further hide encrypted content.
+
+Hijacking
++++++++++
+Network operators could attempt to hijack a browser by injecting false payloads into the data stream (changing content) or by redirecting a session to adversary-controlled hosts. All resources used by WTP are cryptographically signed, making this impossible.
+
+Protocol Replication
+++++++++++++++++++++
+Since WTP is an open source protocol and software, attackers can easily learn how the system operates. This knowledge can be used to block traffic based on WTP's unique signature. However, such efforts would require replicating the full WTP protocol. Doing so would be extremely expensive, both technically and economically, as the protocol is both stateful and uses multiple levels of encryption. It is extremely unlikely that an adversary would apply such analysis to all HTTP traffic on their network.
+
+Honeypots and Monitoring
+++++++++++++++++++++++++
+Adversaries may run mirrors as honeypots to gather information on visitors. Similarly, mirrors which are detected can be monitored rather than blocked. WTP does not address this problem directly. Party creators can choose to only host content with trusted volunteers. Users will also be notified about the possibility of monitoring.
 
 =============
 How it Works
@@ -129,6 +155,8 @@ Open Questions/Issues
 .. _`IE6 usage rates`: http://micgadget.com/11633/why-the-chinese-still-favour-internet-explorer-6/
 .. _`streisand.me`: http://streisand.me/
 .. _`HBGary leaks site`: http://hbgary.anonleaks.ch/
+.. _`DMCA takedown notice`: http://en.wikipedia.org/wiki/Online_Copyright_Infringement_Liability_Limitation_Act#Takedown_example
+.. _`deep packet inspection`: http://en.wikipedia.org/wiki/Deep_packet_inspection
 .. _`The Pirate Bay`: http://thepiratebay.org/
 .. _`Reddit`: http://reddit.com/
 .. _`WikiLeaks mirrors`: http://wikileaks.ch/Mirrors.html
