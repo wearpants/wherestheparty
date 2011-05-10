@@ -118,7 +118,7 @@ About Sidebar
 A collapsible sidebar or dropdown widget can be optionally added to each page, with an explanation of the WTP technology, information about the party creator and keypairs in use, how to volunteer to host a mirror, etc.. 
 
 ========================
-wherestheparty.net
+Social Mirroring
 ========================
 wherestheparty.net (WTPnet) is a website to facilitate the matching of content with volunteer hosts. Volunteers sign up, specify how much and what kind of content they want to host, and provide login credentials (rsync, (s)ftp, S3, etc.) for a webserver. WTPnet will periodically scan `The Pirate Bay`_ and other BitTorrent search engines for specially tagged content (`partywithme`). Such torrents will be automatically downloaded, their content extracted and then transformed to add the necessary JavaScript, keys and signatures. The resultant party will be divided into appropriately-sized portions and  uploaded to volunteer hosts. Mirror lists on existing hosts will be updated periodically.
 
@@ -128,8 +128,8 @@ Updates
 +++++++
 By signing the content tarball using author keys (described in `Proof of Authorship`_), the party creator gains the ability to update content in the future. To update a party, the author creates an update tarball with new/changed files and a manifest of deletions. This file is signed using the author private key, and the tarball and signature are served through BitTorrent as described above. WTPnet can download this new torrent, verify the signature and update the mirrors as necessary. Note that the public author key can be included in the torrent and need not be uploaded to an external keyserver.
 
-Social Mirroring
-+++++++++++++++++
+Community Moderation
+++++++++++++++++++++
 Several difficulties arise from a fully-automated mirroring system. There may be more content than hosting space available. Some content may expose mirror owners to local legal or political liability. The existence of free storage is an attractive target for spammers and trolls.
 
 These problems can be mitigated with the use of collaborative decision making systems (a la `Reddit`_). A small subset of content from a potential party will be unpacked and served to browsers (either by direct hosting or on nodes willing to host unreviewed content).  Users can help provide a brief description and other metadata (political relevance, legal risks), as well as flag potential parties as spam or inappropriate. They will be able to vote on whether that content should be mirrored on WTPnet. Additional weight will be given to the votes of users who:
@@ -160,17 +160,18 @@ For WTPnet, the main site could be written in `Django`_ or another of the many P
 Open Questions/Issues
 ======================
 
- * Is there a better domain than wherestheparty.net? All the good ones are taken.
- * Are there other ways of getting content into WTPnet? Searching for tags/links/named files on Google, file hosting services or links on pastebins perhaps?
- * Elliptic curve DSA would be preferable to RSA, but SJCL doesn't currently support it.
- * WTPnet could generate tarballs on demand for users who do not want to supply login credentials. This makes updating their mirror lists more difficult, but maybe a small mirror-list-update script could be provided.
- * Should WTPnet have a keypair so that tarballs can be transmitted to it securely? Motivation is to prevent content filtering on upload to a file hosting site.
- 
+* Is there a better domain than wherestheparty.net? All the good ones are taken.
+* Are there other ways of getting content into WTPnet? Searching for tags/links/named files on Google, file hosting services or links on pastebins perhaps?
+* Elliptic curve DSA would be preferable to RSA, but SJCL doesn't currently support it.
+* WTPnet could generate tarballs on demand for users who do not want to supply login credentials. This makes updating their mirror lists more difficult, but maybe a small mirror-list-update script could be provided.
+* Should WTPnet have a keypair so that tarballs can be transmitted to it securely? Motivation is to prevent content filtering on upload to a file hosting site.
+* Things may simplified by using a single entry point URI on each mirror and referencing individual documents using anchors (a la Gmail or Twitter). Mirror hopping (switching between entry points on several mirrors) is desirable here, as the browser's back button can be used to find a working mirror if the current one goes down. May also help with memory consumption/leak issues.
+
 .. _`TOR skyrocketed`: https://blog.torproject.org/blog/recent-events-egypt
 .. _`IE6 usage rates`: http://micgadget.com/11633/why-the-chinese-still-favour-internet-explorer-6/
 .. _`streisand.me`: http://streisand.me/
 .. _`HBGary leaks site`: http://hbgary.anonleaks.ch/
-.. _`DMCA takedown notice`: http://en.wikipedia.org/wiki/Online_Copyright_Infringement_Liability_Limitation_Act#Takedown_example
+.. _`DMCA takedown notices`: http://en.wikipedia.org/wiki/Online_Copyright_Infringement_Liability_Limitation_Act#Takedown_example
 .. _`deep packet inspection`: http://en.wikipedia.org/wiki/Deep_packet_inspection
 .. _`MHTML`: http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
 .. _`pdftohtml`: http://pdftohtml.sourceforge.net
