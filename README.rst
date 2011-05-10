@@ -83,9 +83,9 @@ For (3), the user is alerted via popup, and given the option to load the resourc
 
 Images and Binary Resources
 +++++++++++++++++++++++++++
-Images and other binary resources, including PDFs, videos, etc. pose a challenge. Signature checking code cannot be executed by such resources. To compensate, binary data may be embedded directly in HTML using *data:* URLs or `MHTML`_ for older versions of Internet Explorer. Further investigation is needed to determine if these methods can be used for all binary formats, such as video and audio.
+Images and other binary resources, including PDFs, videos, etc. pose a challenge. Signature checking code cannot be executed by such resources. To compensate, binary data may be embedded directly in HTML using *data:* URIs or `MHTML`_ for older versions of Internet Explorer. Further investigation is needed to determine if these methods can be used for all binary formats, such as video and audio.
 
-Embedding cannot be used for binary formats requiring an external viewer, such as PDFs. Such resources need to be downloaded twice - once to check the signature in Javascript and once to load into a viewer. This introduces a "time of check to time of use" vulnerability, where an adversary can provide a valid resource for the first load and a compromised one for the second (which is actually viewed). This attack can be mitigated using a "cut-to-choose" technique (basically, the resource is loaded few times, most of which are signature checks and one of which is viewed, giving a high confidence of validity).
+Embedding cannot be used for binary formats requiring an external viewer, such as PDFs. Such resources need to be downloaded twice - once to check the signature in JavaScript and once to load into a viewer. This introduces a "time of check to time of use" vulnerability, where an adversary can provide a valid resource for the first load and a compromised one for the second (which is actually viewed). This attack can be mitigated using a "cut-to-choose" technique (basically, the resource is loaded few times, most of which are signature checks and one of which is viewed, giving a high confidence of validity).
 
 Alternately, PDFs could be converted to HTML using `pdftohtml`_. Large files such as video pose a particular challenge, as the entire content must be loaded into memory to perform signature checks.
 
@@ -93,9 +93,9 @@ Obfuscation
 +++++++++++
 Obfuscation is introduced to thwart content-aware filtering at the network level. All filenames are hashed and links rewritten. The files are then doubly encrypted. The client JavaScript loads the resource and replaces the page body with the decrypted version.
 
-An inner layer of encryption uses an unique keypair (the "instance keys") for each *instance* of a document on a mirror; no two copies of a resource have the same instance key. This guarrantees that the ciphertext sent over the wire by a particular mirror for a given resource are different than those sent by any other mirror. The private instance key is prefixed to the ciphertext. 
+An inner layer of encryption uses an unique keypair (the "instance keys") for each *instance* of a document on a mirror; no two copies of a resource have the same instance key. This guarantees that the ciphertext sent over the wire by a particular mirror for a given resource are different than those sent by any other mirror. The private instance key is prefixed to the ciphertext. 
 
-An outer layer of encryption uses a unique keypair (the "resource keys") for each document. The private key is appened to the anchor (hash) of URLs referring to the resource. It is transmitted in documents that *link* to the resource, but not with the resource itself. As anchors are not transmitted by browsers in HTTP requests, this outer encryption further complicates filtering. Censors can no longer examine HTTP requests in isolation to detect WTP traffic, as would be the case if only the inner encryption is used. Rather, they must run a complete, stateful implementation of WTP.   
+An outer layer of encryption uses a unique keypair (the "resource keys") for each document. The private key is appended to the anchor (hash) of URIs referring to the resource. It is transmitted in documents that *link* to the resource, but not with the resource itself. As anchors are not transmitted by browsers in HTTP requests, this outer encryption further complicates filtering. Censors can no longer examine HTTP requests in isolation to detect WTP traffic, as would be the case if only the inner encryption is used. Rather, they must run a complete, stateful implementation of WTP.   
 
 Note these techniques provide only obfuscation, not security (as publicly-accessible mirrors have the private keys). It may be possible to detect the presence of ciphertext sent over HTTP (by looking for a high degree of randomness); steganography could be employed in this case.
 
@@ -111,7 +111,11 @@ A standalone application could be used to spider a WTP mirror network and report
 
 Versioning
 +++++++++++
-As publishing updates to a distributed mirror network may take some time, WTP can include a version number for the party as a whole (a la Subversion's revision numbers). JavaScript can detect if a resource on a remote mirror is older than the current generation. It can then look for newer copies on other hosts, alerting the user that content may be out of date if necessary.
+As publishing updates to a distributed mirror network may take some time, WTP can include a version number for the party as a whole (a la Subversion's revision numbers). JavaScript can detect if a resource on a remote mirror is older than the current generation. It can then look for newer copies on other hosts, alerting the user that content may be out of date if necessary. 
+ 
+About Sidebar
++++++++++++++
+A collapsible sidebar or dropdown widget can be optionally added to each page, with an explanation of the WTP technology, information about the party creator and keypairs in use, how to volunteer to host a mirror, etc.. 
 
 ========================
 wherestheparty.net
@@ -148,15 +152,14 @@ Implementation
 ========================
 Core JavaScript logic will be written using `Coffeescript`_, a friendlier dialect of JavaScript. Cross-domain requests will use `EasyXDM`_.  Cryptography will use the  `Stanford JavaScript Crypto Library`_. The use of jQuery will be avoided to allow its use by content without conflicts.
 
-Python will be used to transform content, using `lxml`_. Key generation and signing will be done with `Pycrypto`_ or `M2Crypto`_. A health check spider could be written with `scrapy`_. Testing can use `selenium`_ and/or `Browsershots`_.
+Python will be used to transform content, using `lxml`_. JavaScript obfuscation can be done with `SlimIt`_. Key generation and signing will be done with `Pycrypto`_ or `M2Crypto`_. A health check spider could be written with `scrapy`_. Testing can use `selenium`_ and/or `Browsershots`_. 
 
-For WTPnet, the main site could be written in `Django`_ or another of the many Python web frameworks. Screen scrapers for The Pirate Bay would be written with standard library modules, lxml or scrapy. The orignal `BitTorrent`_ client could be used for downloads. For updloading to mirrors, there is `ftplib`_ for FTP, `paramiko`_ for ssh/sftp, `pysync`_ for rsync. (several alternatives available for all of these, including wrappers around commandline utilities). `scipy`_ and `NLTK`_ can be used for automated language and topic identification, and spam filtering. `Google Translate`_ links will be present on sample pages.
+For WTPnet, the main site could be written in `Django`_ or another of the many Python web frameworks. Screen scrapers for The Pirate Bay would be written with standard library modules, lxml or scrapy. The original `BitTorrent`_ client could be used for downloads. For uploading to mirrors, there is `ftplib`_ for FTP, `paramiko`_ for ssh/sftp, `pysync`_ for rsync. (several alternatives available for all of these, including wrappers around commandline utilities). `scipy`_ and `NLTK`_ can be used for automated language and topic identification, and spam filtering. `Google Translate`_ links will be present on sample pages.
 
 ======================
 Open Questions/Issues
 ======================
 
- * Which JS obfuscater to use? Don't know if any support the ability to obfuscate in a variable way.
  * Is there a better domain than wherestheparty.net? All the good ones are taken.
  * Are there other ways of getting content into WTPnet? Searching for tags/links/named files on Google, file hosting services or links on pastebins perhaps?
  * Elliptic curve DSA would be preferable to RSA, but SJCL doesn't currently support it.
@@ -178,6 +181,7 @@ Open Questions/Issues
 .. _`EasyXDM`: http://easyxdm.net
 .. _`Stanford JavaScript Crypto Library`: http://bitwiseshiftleft.github.com/sjcl/
 .. _`lxml`: http://lxml.de/
+.. _`SlimIt`: http://slimit.org/
 .. _`Pycrypto`: http://pycrypto.org
 .. _`M2Crypto`: http://chandlerproject.org/bin/view/Projects/MeTooCrypto
 .. _`scrapy`: http://scrapy.org
