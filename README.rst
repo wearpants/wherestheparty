@@ -91,7 +91,7 @@ Alternately, PDFs could be converted to HTML using `pdftohtml`_. Large files suc
 
 Obfuscation
 +++++++++++
-Obfuscation is introduced to thwart content-aware filtering at the network level. All filenames are hashed and links rewritten. The files are then doubly encrypted. The client JavaScript loads the resource and replaces the page body with the decrypted version.
+Obfuscation is introduced to thwart content-aware filtering at the network level. All filenames are renamed or hashed and links rewritten. The files are then doubly encrypted. The client JavaScript loads the resource and replaces the page body with the decrypted version.
 
 An inner layer of encryption uses an unique keypair (the "instance keys") for each *instance* of a document on a mirror; no two copies of a resource have the same instance key. This guarantees that the ciphertext sent over the wire by a particular mirror for a given resource are different than those sent by any other mirror. The private instance key is prefixed to the ciphertext. 
 
