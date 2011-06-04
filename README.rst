@@ -117,6 +117,10 @@ About Sidebar
 +++++++++++++
 A collapsible sidebar or dropdown widget can be optionally added to each page, with an explanation of the WTP technology, information about the party creator and keypairs in use, how to volunteer to host a mirror, etc.. 
 
+Anonymization
++++++++++++++
+To protect content authors, WTP can optionally purge identifying metadata from content (EXIF, PDF author, etc.).
+
 ========================
 Social Mirroring
 ========================
