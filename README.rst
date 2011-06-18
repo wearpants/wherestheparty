@@ -124,19 +124,19 @@ To protect content authors, WTP can optionally purge identifying metadata from c
 ========================
 Social Mirroring
 ========================
-wherestheparty.net (WTPnet) is a website to facilitate the matching of content with volunteer hosts. Volunteers sign up, specify how much and what kind of content they want to host, and provide login credentials (rsync, (s)ftp, S3, etc.) for a webserver. WTPnet will periodically scan `The Pirate Bay`_ and other BitTorrent search engines for specially tagged content (`partywithme`). Such torrents will be automatically downloaded, their content extracted and then transformed to add the necessary JavaScript, keys and signatures. The resultant party will be divided into appropriately-sized portions and  uploaded to volunteer hosts. Mirror lists on existing hosts will be updated periodically.
+mirrorparty.org is a website to facilitate the matching of content with volunteer hosts. Volunteers sign up, specify how much and what kind of content they want to host, and provide login credentials (rsync, (s)ftp, S3, etc.) for a webserver. mirrorparty.org will periodically scan `The Pirate Bay`_ and other BitTorrent search engines for specially tagged content (`partywithme`). Such torrents will be automatically downloaded, their content extracted and then transformed to add the necessary JavaScript, keys and signatures. The resultant party will be divided into appropriately-sized portions and  uploaded to volunteer hosts. Mirror lists on existing hosts will be updated periodically.
 
 As the website is highly likely to be blocked, its use is entirely optional. However, as content creators need access to BitTorrent, not the site itself, this problem is somewhat mitigated.
 
 Updates
 +++++++
-By signing the content tarball using author keys (described in `Proof of Authorship`_), the party creator gains the ability to update content in the future. To update a party, the author creates an update tarball with new/changed files and a manifest of deletions. This file is signed using the author private key, and the tarball and signature are served through BitTorrent as described above. WTPnet can download this new torrent, verify the signature and update the mirrors as necessary. Note that the public author key can be included in the torrent and need not be uploaded to an external keyserver.
+By signing the content tarball using author keys (described in `Proof of Authorship`_), the party creator gains the ability to update content in the future. To update a party, the author creates an update tarball with new/changed files and a manifest of deletions. This file is signed using the author private key, and the tarball and signature are served through BitTorrent as described above. mirrorparty.org can download this new torrent, verify the signature and update the mirrors as necessary. Note that the public author key can be included in the torrent and need not be uploaded to an external keyserver.
 
 Community Moderation
 ++++++++++++++++++++
 Several difficulties arise from a fully-automated mirroring system. There may be more content than hosting space available. Some content may expose mirror owners to local legal or political liability. The existence of free storage is an attractive target for spammers and trolls.
 
-These problems can be mitigated with the use of collaborative decision making systems (a la `Reddit`_). A small subset of content from a potential party will be unpacked and served to browsers (either by direct hosting or on nodes willing to host unreviewed content).  Users can help provide a brief description and other metadata (political relevance, legal risks), as well as flag potential parties as spam or inappropriate. They will be able to vote on whether that content should be mirrored on WTPnet. Additional weight will be given to the votes of users who:
+These problems can be mitigated with the use of collaborative decision making systems (a la `Reddit`_). A small subset of content from a potential party will be unpacked and served to browsers (either by direct hosting or on nodes willing to host unreviewed content).  Users can help provide a brief description and other metadata (political relevance, legal risks), as well as flag potential parties as spam or inappropriate. They will be able to vote on whether that content should be mirrored on mirrorparty.org. Additional weight will be given to the votes of users who:
 
  * provide more mirror space (logarithmic, so that small mirrors are not overwhelmed)
  * have a longer history of mirroring (again logarithmic, so that new users are not automatically outvoted)
@@ -149,7 +149,7 @@ System administrators may set reasonable limits on the number of mirrors for pop
 
 Other Content & Services
 ++++++++++++++++++++++++
-WTPnet will provide a list of known parties, instructions on how to use the software and links to information about communications safety. It could run a spider as described in `Health Checks`_ and use the reports to improve the redundancy of the networks it manages. Note that WTPnet will *not* host parties itself, as this would significantly increase its exposure to legal and technological threats.
+mirrorparty.org will provide a list of known parties, instructions on how to use the software and links to information about communications safety. It could run a spider as described in `Health Checks`_ and use the reports to improve the redundancy of the networks it manages. Note that mirrorparty.org will *not* host parties itself, as this would significantly increase its exposure to legal and technological threats.
 
 ========================
 Implementation
@@ -158,17 +158,17 @@ Core JavaScript logic will be written using `Coffeescript`_, a friendlier dialec
 
 Python will be used to transform content, using `lxml`_. JavaScript obfuscation can be done with `SlimIt`_. Key generation and signing will be done with `Pycrypto`_ or `M2Crypto`_. A health check spider could be written with `scrapy`_. Testing can use `selenium`_ and/or `Browsershots`_. 
 
-For WTPnet, the main site could be written in `Django`_ or another of the many Python web frameworks. Screen scrapers for The Pirate Bay would be written with standard library modules, lxml or scrapy. The original `BitTorrent`_ client could be used for downloads. For uploading to mirrors, there is `ftplib`_ for FTP, `paramiko`_ for ssh/sftp, `pysync`_ for rsync. (several alternatives available for all of these, including wrappers around commandline utilities). `scipy`_ and `NLTK`_ can be used for automated language and topic identification, and spam filtering. `Google Translate`_ links will be present on sample pages.
+For mirrorparty.org, the main site could be written in `Django`_ or another of the many Python web frameworks. Screen scrapers for The Pirate Bay would be written with standard library modules, lxml or scrapy. The original `BitTorrent`_ client could be used for downloads. For uploading to mirrors, there is `ftplib`_ for FTP, `paramiko`_ for ssh/sftp, `pysync`_ for rsync. (several alternatives available for all of these, including wrappers around commandline utilities). `scipy`_ and `NLTK`_ can be used for automated language and topic identification, and spam filtering. `Google Translate`_ links will be present on sample pages.
 
 ======================
 Open Questions/Issues
 ======================
 
 * Is there a better domain than wherestheparty.net? All the good ones are taken.
-* Are there other ways of getting content into WTPnet? Searching for tags/links/named files on Google, file hosting services or links on pastebins perhaps?
+* Are there other ways of getting content into mirrorparty.org? Searching for tags/links/named files on Google, file hosting services or links on pastebins perhaps?
 * Elliptic curve DSA would be preferable to RSA, but SJCL doesn't currently support it.
-* WTPnet could generate tarballs on demand for users who do not want to supply login credentials. This makes updating their mirror lists more difficult, but maybe a small mirror-list-update script could be provided.
-* Should WTPnet have a keypair so that tarballs can be transmitted to it securely? Motivation is to prevent content filtering on upload to a file hosting site.
+* mirrorparty.org could generate tarballs on demand for users who do not want to supply login credentials. This makes updating their mirror lists more difficult, but maybe a small mirror-list-update script could be provided.
+* Should mirrorparty.org have a keypair so that tarballs can be transmitted to it securely? Motivation is to prevent content filtering on upload to a file hosting site.
 * Things may simplified by using a single entry point URI on each mirror and referencing individual documents using anchors (a la Gmail or Twitter). Mirror hopping (switching between entry points on several mirrors) is desirable here, as the browser's back button can be used to find a working mirror if the current one goes down. May also help with memory consumption/leak issues.
 
 .. _`TOR skyrocketed`: https://blog.torproject.org/blog/recent-events-egypt
