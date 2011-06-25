@@ -9,7 +9,8 @@ WTP consists of software tools for building mirror networks and a website for ma
 :author: Peter Fein
 :email: pete@wearpants.org
 :source: http://github.com/pfein/wherestheparty
-:mailing list: http://groups.google.com/group/wherestheparty?lnk=gcimh
+:mailing list: http://groups.google.com/group/wherestheparty
+:irc: #mirrorparty on irc.freenode.org
 
 ===============
 Problems Solved
