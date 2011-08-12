@@ -1,56 +1,60 @@
-party_roots = ['http://wtp1', 'http://wtp2', 'http://wtp3']
+party_roots = ['http://localhost:8080', 'http://wtp1', 'http://wtp2', 'http://wtp3']
 
 makeCORS = (root) ->
     new easyXDM.Rpc({remote: root+'/wtp/cors.html'}, {remote: {request: {}}})
 
 party_rpcs = (makeCORS(x) for x in party_roots)
-local_rpc = makeCORS(local_root)
 
 # is href a mirrorable URL?
-isMirrorable = (href) ->
+mirrorPart = (href) ->
     ###
     XXX should things with query be included? Who knows how servers will react.
     It's almost certainly an input error.
+    XXX Should probably filter out #hash on current mirror
     ###
-    console.log('test', href)
-    uri = new URI href
-    return false if uri.scheme() or uri.heirpart().authority() or uri.query # cannot deal at all
-    return false if not uri.heirpart().path() and uri.fragment() # just a fragment
-    return true # empty path, or path w/ optional fragment
+    for root in party_roots
+        return href[root.length...href.length] if href[0...root.length] == root
+    return null
 
 bindAnchors = ->
-    els = (e for e in document.getElementsByTagName('a') when isMirrorable(e.href))
-    for e in els
-        e.style.color = 'red'
-        do (e) ->
-            e.addEventListener('click', (event) ->
+    els = ([el, part] for [el, part] in ([e, mirrorPart(e.href)] for e in document.getElementsByTagName('a')) when part)
+    for [el, part] in els
+        el.style.color = 'red'
+        el.setAttribute 'mirror-part', part
+        do (el, part) ->
+            el.addEventListener('click', (event) ->
                 # event handler
-                return false if e.getAttribute 'doing-click'
-                e.setAttribute 'doing-click', true
-                e.setAttribute 'orig-text', e.innerHTML
-                e.innerHTML += ' (loading...)'
+                return false if el.getAttribute 'doing-click'
+                el.setAttribute 'doing-click', true
+                el.setAttribute 'orig-text', el.innerHTML
+                el.innerHTML += ' (loading...)'
 
                 # XXX needs various IE crap
                 event.preventDefault()
-                openLink e, event.target.href
+                openLink el, event.target.href
                 return false
             false)
 
 checkLink = (href, rpc, successFn, errorFn) ->
+    console.log 'check', href
     rpc.request({url: href, method: 'HEAD'},
     (response) -> if response.status == 200 then successFn else errorFn ,
     errorFn)
 
-openLink = (e, href) ->
-    # XXX blast everything off in parallel, first one wins? eh
-    h = (new URI local_root).resolveReference(href).toAbsolute().toString()
-    checkLink(h, local_rpc, (-> window.location = h), (-> console.log('OH FUCKING NOES', h)))
+goThere = (h) ->
+    console.log 'going to', h
+    window.location=h
 
-    for i in [0...party_roots]
+openLink = (el, href) ->
+    console.log('openLink', el, href)
+    # XXX blast everything off in parallel, first one wins? eh
+    for i in [0...party_roots.length]
         rpc = party_rpcs[i]
-        h = (new URI party_roots[i]).resolveReference(href).toAbsolute().toString()
+        h = party_roots[i] + el.getAttribute('mirror-part')
+        console.log('wat', h, rpc)
         do (h, rpc) ->
-            checkLink(h, rpc, (-> window.location = h), (-> console.log('OH FUCKING NOES', h)))
+            console.log('wut', h, rpc)
+            checkLink(h, rpc, (-> goThere h), (-> console.log('OH FUCKING NOES', h)))
 
     # XXX if everything fails, do something useful (alert?)
 
