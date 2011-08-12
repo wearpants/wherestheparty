@@ -1,8 +1,7 @@
 party_roots = ['http://localhost:8080', 'http://localhost:8081', 'http://wtp1', 'http://wtp2', 'http://wtp3']
 
-console.log 'roots', party_roots
-
 # XXX if RPC setup fails, remove from party_roots
+# XXX also include name.html transport.
 makeCORS = (root) ->
     new easyXDM.Rpc({remote: root+'/wtp/cors.html'}, {remote: {request: {}}})
 
@@ -29,8 +28,6 @@ bindAnchors = ->
                 # event handler
                 return false if el.getAttribute 'doing-click'
                 el.setAttribute 'doing-click', true
-                el.setAttribute 'orig-text', el.innerHTML
-                el.innerHTML += ' (loading...)'
 
                 # XXX needs various IE crap
                 event.preventDefault()
@@ -38,27 +35,36 @@ bindAnchors = ->
                 return false
             false)
 
-errorFn = (response) ->
-    console.log 'errorFn', response
+showMesg = (msg...) ->
+    m = if msg.length then msg[0] else ""
+    for x in msg[1...]
+        m += " " + x.toString()
+
+    div = document.getElementById 'wtp-messages'
+    p = document.createElement 'p'
+    p.innerHTML = m
+    div.appendChild(p)
+    console.log m
 
 checkLink = (href, rpc, successFn, errorFn) ->
-    console.log 'check', href
-    rpc.request({url: href, method: 'HEAD'}, successFn, errorFn)
+    showMesg 'checking', href
+    rpc.request {url: href, method: 'HEAD'}, successFn, errorFn
 
 goThere = (h) ->
-    console.log 'going to', h
-    window.location=h
+    showMesg 'going to', h
+    window.location = h
 
 openLink = (el, href) ->
-    console.log('openLink', el, href)
+    showMesg 'opening link', href
     # XXX blast everything off in parallel, first one wins? eh
     for i in [0...party_roots.length]
         rpc = party_rpcs[i]
         h = party_roots[i] + el.getAttribute('mirror-part')
         do (h, rpc) ->
-            checkLink(h, rpc, (-> goThere h), errorFn )
+            checkLink(h, rpc, (-> goThere h), (-> showMesg 'failed to load', h) )
+            el.removeAttribute('doing-click')
 
     # XXX if everything fails, do something useful (alert?)
 
-window.addEventListener('load', (-> bindAnchors()), false)
+window.addEventListener('load', (-> bindAnchors(); showMesg 'Welcome to <a href=http://mirrorparty.org>WTP</a>'), false)
 
