@@ -1,11 +1,12 @@
 party_roots = ['http://localhost:8080', 'http://wtp1', 'http://wtp2', 'http://wtp3']
 
+# XXX if RPC setup fails, remove from party_roots
 makeCORS = (root) ->
     new easyXDM.Rpc({remote: root+'/wtp/cors.html'}, {remote: {request: {}}})
 
 party_rpcs = (makeCORS(x) for x in party_roots)
 
-# is href a mirrorable URL?
+# return the relative part of a mirrorable URI or null if URI is not mirrorable
 mirrorPart = (href) ->
     ###
     XXX should things with query be included? Who knows how servers will react.
@@ -35,11 +36,19 @@ bindAnchors = ->
                 return false
             false)
 
-checkLink = (href, rpc, successFn, errorFn) ->
+successFn = (response) ->
+    console.log 'successFn', response
+    if response.status == 200
+        console.log('allcool')
+    else
+        console.log('fail')
+
+errorFn = (response) ->
+    console.log 'errorFn', response
+
+checkLink = (href, rpc) ->
     console.log 'check', href
-    rpc.request({url: href, method: 'HEAD'},
-    (response) -> if response.status == 200 then successFn else errorFn ,
-    errorFn)
+    rpc.request({url: href, method: 'HEAD'}, successFn, errorFn)
 
 goThere = (h) ->
     console.log 'going to', h
@@ -51,10 +60,8 @@ openLink = (el, href) ->
     for i in [0...party_roots.length]
         rpc = party_rpcs[i]
         h = party_roots[i] + el.getAttribute('mirror-part')
-        console.log('wat', h, rpc)
         do (h, rpc) ->
-            console.log('wut', h, rpc)
-            checkLink(h, rpc, (-> goThere h), (-> console.log('OH FUCKING NOES', h)))
+            checkLink(h, rpc)
 
     # XXX if everything fails, do something useful (alert?)
 
