@@ -1,4 +1,6 @@
-party_roots = ['http://localhost:8080', 'http://wtp1', 'http://wtp2', 'http://wtp3']
+party_roots = ['http://localhost:8080', 'http://localhost:8081', 'http://wtp1', 'http://wtp2', 'http://wtp3']
+
+console.log 'roots', party_roots
 
 # XXX if RPC setup fails, remove from party_roots
 makeCORS = (root) ->
@@ -6,7 +8,7 @@ makeCORS = (root) ->
 
 party_rpcs = (makeCORS(x) for x in party_roots)
 
-# return the relative part of a mirrorable URI or null if URI is not mirrorable
+# return the relative part (path) of a mirrorable URI or null if URI is not mirrorable
 mirrorPart = (href) ->
     ###
     XXX should things with query be included? Who knows how servers will react.
@@ -14,7 +16,7 @@ mirrorPart = (href) ->
     XXX Should probably filter out #hash on current mirror
     ###
     for root in party_roots
-        return href[root.length...href.length] if href[0...root.length] == root
+        return href[root.length...] if href[...root.length] == root
     return null
 
 bindAnchors = ->
@@ -36,17 +38,10 @@ bindAnchors = ->
                 return false
             false)
 
-successFn = (response) ->
-    console.log 'successFn', response
-    if response.status == 200
-        console.log('allcool')
-    else
-        console.log('fail')
-
 errorFn = (response) ->
     console.log 'errorFn', response
 
-checkLink = (href, rpc) ->
+checkLink = (href, rpc, successFn, errorFn) ->
     console.log 'check', href
     rpc.request({url: href, method: 'HEAD'}, successFn, errorFn)
 
@@ -61,7 +56,7 @@ openLink = (el, href) ->
         rpc = party_rpcs[i]
         h = party_roots[i] + el.getAttribute('mirror-part')
         do (h, rpc) ->
-            checkLink(h, rpc)
+            checkLink(h, rpc, (-> goThere h), errorFn )
 
     # XXX if everything fails, do something useful (alert?)
 
