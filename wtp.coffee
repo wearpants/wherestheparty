@@ -1,11 +1,7 @@
 party_roots = ['http://localhost:8080', 'http://localhost:8081', 'http://wtp1', 'http://wtp2', 'http://wtp3']
 
-# XXX if RPC setup fails, remove from party_roots
-# XXX also include name.html transport.
-makeCORS = (root) ->
-    new easyXDM.Rpc({remote: root+'/wtp/cors.html'}, {remote: {request: {}}})
-
-party_rpcs = (makeCORS(x) for x in party_roots)
+# roots, etc.
+parties = {}
 
 # return the relative part (path) of a mirrorable URI or null if URI is not mirrorable
 mirrorPart = (href) ->
@@ -57,14 +53,33 @@ goThere = (h) ->
 openLink = (el, href) ->
     showMesg 'opening link', href
     # XXX blast everything off in parallel, first one wins? eh
-    for i in [0...party_roots.length]
-        rpc = party_rpcs[i]
-        h = party_roots[i] + el.getAttribute('mirror-part')
-        do (h, rpc) ->
-            checkLink(h, rpc, (-> goThere h), (-> showMesg 'failed to load', h) )
-            el.removeAttribute('doing-click')
+    for root, rpc of parties
+        h = root + el.getAttribute('mirror-part')
+        if rpc.alive
+            do (h, rpc) ->
+                checkLink(h, rpc, (-> goThere h), (-> showMesg 'failed to load', h) )
+                el.removeAttribute('doing-click')
+        else
+            showMesg 'skipping', h, 'because RPC setup failed'
 
     # XXX if everything fails, do something useful (alert?)
 
-window.addEventListener('load', (-> bindAnchors(); showMesg 'Welcome to <a href=http://mirrorparty.org>WTP</a>'), false)
+install = ->
+    # XXX also include name.html transport.
+    for root in party_roots
+        do (root) ->
+            parties[root] = new easyXDM.Rpc({remote: root+'/wtp/cors.html',
+            onReady: (success) ->
+                console.log "established CORS", root
+                parties[root].alive = true},
+            {remote: {request: {}}})
+
+    bindAnchors()
+    showMesg 'Welcome to <a href=http://mirrorparty.org>WTP</a>'
+
+
+window.addEventListener('load', install, false)
+
+window.WTP = {}
+window.WTP.parties = parties
 
