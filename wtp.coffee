@@ -4,6 +4,7 @@ makeCORS = (root) ->
     new easyXDM.Rpc({remote: root+'/wtp/cors.html'}, {remote: {request: {}}})
 
 party_rpcs = (makeCORS(x) for x in party_roots)
+local_rpc = makeCORS(local_root)
 
 # is href a mirrorable URL?
 isMirrorable = (href) ->
@@ -16,7 +17,7 @@ isMirrorable = (href) ->
     return false if not uri.heirpart().path() and uri.fragment() # just a fragment
     return true # empty path, or path w/ optional fragment
 
-bindAnchors = () ->
+bindAnchors = ->
     els = (e for e in document.getElemetsByTagName 'a' if isMirrorable e)
     for e in els
         do (e) ->
@@ -33,7 +34,23 @@ bindAnchors = () ->
                 return false
             false)
 
+checkLink = (href, rpc, successFn, errorFn) ->
+    rpc.request({url: href, method: 'HEAD'},
+    (response) -> if response.status == 200 then successFn else errorFn ,
+    errorFn)
 
+openLink (e, href) ->
+    # XXX blast everything off in parallel, first one wins? eh
+    h = (new URI local_root).resolveReference(href).toAbsolute().toString()
+    checkLink(h, local_rpc, (-> window.location = h), (-> console.log('OH FUCKING NOES', h)))
+
+    for i in [0...party_roots]
+        rpc = party_rpcs[i]
+        h = (new URI party_roots[i]).resolveReference(href).toAbsolute().toString()
+        do (h, rpc) ->
+            checkLink(h, rpc, (-> window.location = h), (-> console.log('OH FUCKING NOES', h)))
+
+    # XXX if everything fails, do something useful (alert?)
 
 # export some vars
 ns = exports ? this.wtp = {}
