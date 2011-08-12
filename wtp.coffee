@@ -12,14 +12,16 @@ isMirrorable = (href) ->
     XXX should things with query be included? Who knows how servers will react.
     It's almost certainly an input error.
     ###
+    console.log('test', href)
     uri = new URI href
-    return false if uri.scheme() or uri.hierpart().authority() or uri.query # cannot deal at all
+    return false if uri.scheme() or uri.heirpart().authority() or uri.query # cannot deal at all
     return false if not uri.heirpart().path() and uri.fragment() # just a fragment
     return true # empty path, or path w/ optional fragment
 
 bindAnchors = ->
-    els = (e for e in document.getElemetsByTagName 'a' if isMirrorable e)
+    els = (e for e in document.getElementsByTagName('a') when isMirrorable(e.href))
     for e in els
+        e.style.color = 'red'
         do (e) ->
             e.addEventListener('click', (event) ->
                 # event handler
@@ -39,7 +41,7 @@ checkLink = (href, rpc, successFn, errorFn) ->
     (response) -> if response.status == 200 then successFn else errorFn ,
     errorFn)
 
-openLink (e, href) ->
+openLink = (e, href) ->
     # XXX blast everything off in parallel, first one wins? eh
     h = (new URI local_root).resolveReference(href).toAbsolute().toString()
     checkLink(h, local_rpc, (-> window.location = h), (-> console.log('OH FUCKING NOES', h)))
@@ -52,10 +54,5 @@ openLink (e, href) ->
 
     # XXX if everything fails, do something useful (alert?)
 
-# export some vars
-ns = exports ? this.wtp = {}
-
-ns.party_roots = party_roots
-ns.isMirrorable = isMirrorable
-ns.parseURI = parseURI
+window.addEventListener('load', (-> bindAnchors()), false)
 
