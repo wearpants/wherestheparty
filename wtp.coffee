@@ -1,8 +1,5 @@
 party_roots = ['http://localhost:8080', 'http://localhost:8081', 'http://wtp1', 'http://wtp2', 'http://wtp3']
 
-# roots, etc.
-parties = {}
-
 # return the relative part (path) of a mirrorable URI or null if URI is not mirrorable
 mirrorPart = (href) ->
     ###
@@ -14,6 +11,7 @@ mirrorPart = (href) ->
         return href[root.length...] if href[...root.length] == root
     return null
 
+# add handlers to links
 bindAnchors = ->
     els = ([el, part] for [el, part] in ([e, mirrorPart(e.href)] for e in document.getElementsByTagName('a')) when part)
     for [el, part] in els
@@ -22,15 +20,16 @@ bindAnchors = ->
         do (el, part) ->
             el.addEventListener('click', (event) ->
                 # event handler
-                return false if el.getAttribute 'doing-click'
+                return false if el.getAttribute 'doing-click' # XXX guard saves wasted work if user hammers link
                 el.setAttribute 'doing-click', true
 
                 # XXX needs various IE crap
                 event.preventDefault()
-                openLink el, event.target.href
+                openLink el
                 return false
             false)
 
+# display a message to div#wtp-messages and console.log
 showMesg = (msg...) ->
     m = if msg.length then msg[0] else ""
     for x in msg[1...]
@@ -42,7 +41,9 @@ showMesg = (msg...) ->
     div.appendChild(p)
     console.log m
 
-openLink = (el, href) ->
+# open a mirrored link
+openLink = (el) ->
+    href = el.href
     showMesg 'opening link', href
     el.style.color = 'green'
     mirrors = []
@@ -68,6 +69,7 @@ openLink = (el, href) ->
                 ( -> # success
                     showMesg 'going to', h_
                     el.style.color = 'blue'
+                    el.removeAttribute('doing-click')
                     window.location = h_),
                 ( -> # error
                     showMesg 'failed to load', h_
@@ -75,6 +77,11 @@ openLink = (el, href) ->
                 )
     walkMirrors()
 
+
+# map of root:rpc
+parties = {}
+
+# add the magic
 install = ->
     # XXX also include name.html transport.
     for root in party_roots
