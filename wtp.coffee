@@ -51,21 +51,25 @@ openLink = (el, href) ->
         h = root + el.getAttribute('mirror-part')
         if rpc.alive then mirrors.push [h, rpc] else showMesg 'skipping', h, 'because RPC setup failed'
 
+    # try each mirror *sequentially*
+    # list of mirrors is captured in closure.
+    # pop a mirror, check for page with HEAD. Recurse only on error.
     walkMirrors = ->
         if not mirrors.length
             # out of mirrors
-            showMesg 'Sorry, no more mirrors for', href # XXX could use better URL
+            showMesg 'Sorry, no more mirrors for', href # XXX could use better URL?
             el.style.color = 'red'
             el.removeAttribute('doing-click')
         else
+            # mirrors remaining
             [h_, rpc_] = mirrors.pop()
             showMesg 'checking', h_
             rpc_.request({url: h_, method: 'HEAD'},
-                ( ->
+                ( -> # success
                     showMesg 'going to', h_
                     el.style.color = 'blue'
                     window.location = h_),
-                ( ->
+                ( -> # error
                     showMesg 'failed to load', h_
                     walkMirrors())
                 )
@@ -83,7 +87,6 @@ install = ->
 
     bindAnchors()
     showMesg 'Welcome to <a href=http://mirrorparty.org>WTP</a>'
-
 
 window.addEventListener('load', install, false)
 
