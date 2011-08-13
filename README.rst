@@ -8,6 +8,7 @@ WTP consists of software tools for building mirror networks and a website for ma
 
 :author: Peter Fein
 :email: pete@wearpants.org
+:twitter: `@petewearspants <http://twitter.com/petewearspants>`__
 :source: http://github.com/pfein/wherestheparty
 :mailing list: http://groups.google.com/group/wherestheparty
 :irc: #mirrorparty on irc.freenode.org
@@ -37,7 +38,7 @@ WTP is resistant to a variety of different threats. As an entirely open system, 
 
 Legal challenges
 ++++++++++++++++
-Censors may cause content to be removed from a host using the legal system, such as `DMCA takedown notices`_.  WTP makes such takedowns impossible or costly, by utilizing a large number of hosts in multiple legal jurisdictions (some of which may be immune to takedowns). Attempts at domain seizure face similar challenges, and are further complicated by the co-hosting of targeted and innocuous content. 
+Censors may cause content to be removed from a host using the legal system, such as `DMCA takedown notices`_.  WTP makes such takedowns impossible or costly, by utilizing a large number of hosts in multiple legal jurisdictions (some of which may be immune to takedowns). Attempts at domain seizure face similar challenges, and are further complicated by the co-hosting of targeted and innocuous content.
 
 Hostname & IP blocking
 ++++++++++++++++++++++
@@ -45,7 +46,7 @@ Network operators may block traffic to particular IP addresses or hostnames. WTP
 
 Protocol filtering
 ++++++++++++++++++
-Network operators can block traffic using particular protocols (most commonly SSL, but also TOR & VPN). This form of coarse filtering has been observed in China and Iran. WTP only utilizes plain HTTP, making such efforts ineffective.  
+Network operators can block traffic using particular protocols (most commonly SSL, but also TOR & VPN). This form of coarse filtering has been observed in China and Iran. WTP only utilizes plain HTTP, making such efforts ineffective.
 
 Deep packet inspection
 ++++++++++++++++++++++
@@ -78,7 +79,7 @@ Several errors are possible:
  1. the resource may not exist on the current server (404)
  2. the current server timeouts. This can occur if the user leaves a browser window open and the node is taken down or blocked.
  3. the verification signature is invalid
- 
+
 For (1) or (2), the JavaScript uses a cross-domain request (XDM) and walks through the list of mirrors to find the target resource. If found, it verifies the signature of the resource *and* the signature of the WTP JavaScript on the remote mirror, as well as that the remote public key is the same. If these tests pass, the browser is redirected to the remote resource. If none of the nodes in the current mirror list has the resource, their mirror lists are consulted by the same process.
 
 For (3), the user is alerted via popup, and given the option to load the resource from the current host or from a different node. XXX user choice here is lame
@@ -95,9 +96,9 @@ Obfuscation
 +++++++++++
 Obfuscation is introduced to thwart content-aware filtering at the network level. All filenames are renamed or hashed and links rewritten. The files are then doubly encrypted. The client JavaScript loads the resource and replaces the page body with the decrypted version.
 
-An inner layer of encryption uses an unique keypair (the "instance keys") for each *instance* of a document on a mirror; no two copies of a resource have the same instance key. This guarantees that the ciphertext sent over the wire by a particular mirror for a given resource are different than those sent by any other mirror. The private instance key is prefixed to the ciphertext. 
+An inner layer of encryption uses an unique keypair (the "instance keys") for each *instance* of a document on a mirror; no two copies of a resource have the same instance key. This guarantees that the ciphertext sent over the wire by a particular mirror for a given resource are different than those sent by any other mirror. The private instance key is prefixed to the ciphertext.
 
-An outer layer of encryption uses a unique keypair (the "resource keys") for each document. The private key is appended to the anchor (hash) of URIs referring to the resource. It is transmitted in documents that *link* to the resource, but not with the resource itself. As anchors are not transmitted by browsers in HTTP requests, this outer encryption further complicates filtering. Censors can no longer examine HTTP requests in isolation to detect WTP traffic, as would be the case if only the inner encryption is used. Rather, they must run a complete, stateful implementation of WTP.   
+An outer layer of encryption uses a unique keypair (the "resource keys") for each document. The private key is appended to the anchor (hash) of URIs referring to the resource. It is transmitted in documents that *link* to the resource, but not with the resource itself. As anchors are not transmitted by browsers in HTTP requests, this outer encryption further complicates filtering. Censors can no longer examine HTTP requests in isolation to detect WTP traffic, as would be the case if only the inner encryption is used. Rather, they must run a complete, stateful implementation of WTP.
 
 Note these techniques provide only obfuscation, not security (as publicly-accessible mirrors have the private keys). It may be possible to detect the presence of ciphertext sent over HTTP (by looking for a high degree of randomness); steganography could be employed in this case.
 
@@ -109,15 +110,15 @@ Proof of authorship may be added by signing the verification key with a known, i
 
 Health Checks
 ++++++++++++++
-A standalone application could be used to spider a WTP mirror network and report on down nodes, signature errors, resource replication statistics, and so on. Similarly, client JavaScript could optionally report back to a web service specified by the party creator about down nodes and signature errors. 
+A standalone application could be used to spider a WTP mirror network and report on down nodes, signature errors, resource replication statistics, and so on. Similarly, client JavaScript could optionally report back to a web service specified by the party creator about down nodes and signature errors.
 
 Versioning
 +++++++++++
-As publishing updates to a distributed mirror network may take some time, WTP can include a version number for the party as a whole (a la Subversion's revision numbers). JavaScript can detect if a resource on a remote mirror is older than the current generation. It can then look for newer copies on other hosts, alerting the user that content may be out of date if necessary. 
- 
+As publishing updates to a distributed mirror network may take some time, WTP can include a version number for the party as a whole (a la Subversion's revision numbers). JavaScript can detect if a resource on a remote mirror is older than the current generation. It can then look for newer copies on other hosts, alerting the user that content may be out of date if necessary.
+
 About Sidebar
 +++++++++++++
-A collapsible sidebar or dropdown widget can be optionally added to each page, with an explanation of the WTP technology, information about the party creator and keypairs in use, how to volunteer to host a mirror, etc.. 
+A collapsible sidebar or dropdown widget can be optionally added to each page, with an explanation of the WTP technology, information about the party creator and keypairs in use, how to volunteer to host a mirror, etc..
 
 Anonymization
 +++++++++++++
@@ -142,12 +143,12 @@ These problems can be mitigated with the use of collaborative decision making sy
 
  * provide more mirror space (logarithmic, so that small mirrors are not overwhelmed)
  * have a longer history of mirroring (again logarithmic, so that new users are not automatically outvoted)
- * mirror content on under served countries, languages and topics  
+ * mirror content on under served countries, languages and topics
  * mirror under-replicated content (see below)
 
 The actual content mirrored on a particular node is left up to that node's owner. Volunteers may allocate space to parties selected by the community, subject to constraints they specify (i.e., "exclude content that is legally risky in my jurisdiction"). Alternately, they may prefer individual parties, authors, topics or countries. Extra voting weight will be given to volunteers who mirror scarce (i.e., under-replicated) content.
 
-System administrators may set reasonable limits on the number of mirrors for popular parties. For example, the world probably doesn't need any more `WikiLeaks mirrors`_ at present. 
+System administrators may set reasonable limits on the number of mirrors for popular parties. For example, the world probably doesn't need any more `WikiLeaks mirrors`_ at present.
 
 Other Content & Services
 ++++++++++++++++++++++++
@@ -158,7 +159,7 @@ Implementation
 ========================
 Core JavaScript logic will be written using `Coffeescript`_, a friendlier dialect of JavaScript. Cross-domain requests will use `EasyXDM`_.  Cryptography will use the  `Stanford JavaScript Crypto Library`_. The use of jQuery will be avoided to allow its use by content without conflicts.
 
-Python will be used to transform content, using `lxml`_. JavaScript obfuscation can be done with `SlimIt`_. Key generation and signing will be done with `Pycrypto`_ or `M2Crypto`_. A health check spider could be written with `scrapy`_. Testing can use `selenium`_ and/or `Browsershots`_. 
+Python will be used to transform content, using `lxml`_. JavaScript obfuscation can be done with `SlimIt`_. Key generation and signing will be done with `Pycrypto`_ or `M2Crypto`_. A health check spider could be written with `scrapy`_. Testing can use `selenium`_ and/or `Browsershots`_.
 
 For mirrorparty.org, the main site could be written in `Django`_ or another of the many Python web frameworks. Screen scrapers for The Pirate Bay would be written with standard library modules, lxml or scrapy. The original `BitTorrent`_ client could be used for downloads. For uploading to mirrors, there is `ftplib`_ for FTP, `paramiko`_ for ssh/sftp, `pysync`_ for rsync. (several alternatives available for all of these, including wrappers around commandline utilities). `scipy`_ and `NLTK`_ can be used for automated language and topic identification, and spam filtering. `Google Translate`_ links will be present on sample pages.
 
@@ -202,3 +203,4 @@ Open Questions/Issues
 .. _`scipy`: http://www.scipy.org
 .. _`NLTK`: http://www.nltk.org/
 .. _`Google Translate`: http://translate.google.com/
+
