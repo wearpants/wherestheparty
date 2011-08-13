@@ -17,7 +17,7 @@ mirrorPart = (href) ->
 bindAnchors = ->
     els = ([el, part] for [el, part] in ([e, mirrorPart(e.href)] for e in document.getElementsByTagName('a')) when part)
     for [el, part] in els
-        el.style.color = 'red'
+        el.style.color = 'lightblue'
         el.setAttribute 'mirror-part', part
         do (el, part) ->
             el.addEventListener('click', (event) ->
@@ -42,27 +42,34 @@ showMesg = (msg...) ->
     div.appendChild(p)
     console.log m
 
-checkLink = (href, rpc, successFn, errorFn) ->
-    showMesg 'checking', href
-    rpc.request {url: href, method: 'HEAD'}, successFn, errorFn
-
-goThere = (h) ->
-    showMesg 'going to', h
-    window.location = h
-
 openLink = (el, href) ->
     showMesg 'opening link', href
-    # XXX blast everything off in parallel, first one wins? eh
+    el.style.color = 'green'
+    mirrors = []
+
     for root, rpc of parties
         h = root + el.getAttribute('mirror-part')
-        if rpc.alive
-            do (h, rpc) ->
-                checkLink(h, rpc, (-> goThere h), (-> showMesg 'failed to load', h) )
-                el.removeAttribute('doing-click')
-        else
-            showMesg 'skipping', h, 'because RPC setup failed'
+        if rpc.alive then mirrors.push [h, rpc] else showMesg 'skipping', h, 'because RPC setup failed'
 
-    # XXX if everything fails, do something useful (alert?)
+    walkMirrors = ->
+        if not mirrors.length
+            # out of mirrors
+            showMesg 'Sorry, no more mirrors for', href # XXX could use better URL
+            el.style.color = 'red'
+            el.removeAttribute('doing-click')
+        else
+            [h_, rpc_] = mirrors.pop()
+            showMesg 'checking', h_
+            rpc_.request({url: h_, method: 'HEAD'},
+                ( ->
+                    showMesg 'going to', h_
+                    el.style.color = 'blue'
+                    window.location = h_),
+                ( ->
+                    showMesg 'failed to load', h_
+                    walkMirrors())
+                )
+    walkMirrors()
 
 install = ->
     # XXX also include name.html transport.
@@ -79,7 +86,4 @@ install = ->
 
 
 window.addEventListener('load', install, false)
-
-window.WTP = {}
-window.WTP.parties = parties
 
