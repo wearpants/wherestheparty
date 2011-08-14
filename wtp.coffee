@@ -48,9 +48,9 @@ openLink = (el) ->
     el.style.color = 'green'
     mirrors = []
 
-    for root, rpc of parties
-        h = root + el.getAttribute('mirror-part')
-        if rpc.alive then mirrors.push [h, rpc] else showMesg 'skipping', h, 'because RPC setup failed'
+    for rpc in rpcs
+        h = rpc.root + el.getAttribute('mirror-part')
+        mirrors.push [h, rpc]
 
     # try each mirror *sequentially*
     # list of mirrors is captured in closure.
@@ -78,19 +78,21 @@ openLink = (el) ->
     walkMirrors()
 
 
-# map of root:rpc
-parties = {}
+# list of active RPCs. Append in onReady callback
+rpcs = []
 
 # add the magic
 install = ->
     # XXX also include name.html transport.
     for root in party_roots
         do (root) ->
-            parties[root] = new easyXDM.Rpc({remote: root+'/wtp/cors.html',
+            # XXX weirdness with me/closure is b/c the RPC is not passed to onReady callback
+            me = new easyXDM.Rpc({remote: root+'/wtp/cors.html',
             onReady: (success) ->
                 console.log "established CORS", root
-                parties[root].alive = true},
+                rpcs.push me},
             {remote: {request: {}}})
+            me.root = root
 
     bindAnchors()
     showMesg 'Welcome to <a href=http://mirrorparty.org>WTP</a>'
