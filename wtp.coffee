@@ -1,4 +1,6 @@
-## define a global party_roots array with the base URIs of your mirrors
+## define global variables:
+## - party_roots: array with the base URIs of your mirrors
+## - cors_path: path to cors.html relative to root
 
 # return the relative part (path) of a mirrorable URI or null if URI is not mirrorable
 mirrorPart = (href) ->
@@ -117,7 +119,7 @@ install = ->
     for root in party_roots
         do (root) ->
             # XXX weirdness with me/closure is b/c the RPC is not passed to onReady callback
-            me = new easyXDM.Rpc({remote: root+'/wtp/cors.html',
+            me = new easyXDM.Rpc({remote: root+cors_path,
             onReady: (success) ->
                 console.log "established CORS", root
                 rpcs.push me},

@@ -143,7 +143,7 @@
     _fn = function(root) {
       var me;
       me = new easyXDM.Rpc({
-        remote: root + '/wtp/cors.html',
+        remote: root + cors_path,
         onReady: function(success) {
           console.log("established CORS", root);
           return rpcs.push(me);
