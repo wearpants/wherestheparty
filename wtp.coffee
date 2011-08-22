@@ -1,4 +1,4 @@
-party_roots = ['http://localhost:8080', 'http://localhost:8081', 'http://wtp1', 'http://wtp2', 'http://wtp3']
+## define a global party_roots array with the base URIs of your mirrors
 
 # return the relative part (path) of a mirrorable URI or null if URI is not mirrorable
 mirrorPart = (href) ->
