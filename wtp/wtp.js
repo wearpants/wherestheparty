@@ -117,7 +117,8 @@
       if (!mirrors.length) {
         showMesg('Sorry, no more mirrors for', href);
         el.style.color = 'red';
-        return el.removeAttribute('doing-click');
+        el.removeAttribute('doing-click');
+        return alert('Failed to load, no more mirrors');
       } else {
         _ref = mirrors.pop(), h_ = _ref[0], rpc_ = _ref[1];
         showMesg('checking', h_);

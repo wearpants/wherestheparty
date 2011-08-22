@@ -93,6 +93,7 @@ openLink = (el) ->
             showMesg 'Sorry, no more mirrors for', href # XXX could use better URL?
             el.style.color = 'red'
             el.removeAttribute('doing-click')
+            alert 'Failed to load, no more mirrors'
         else
             # mirrors remaining
             [h_, rpc_] = mirrors.pop()
