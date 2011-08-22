@@ -38,16 +38,15 @@ makeMesgBox = ->
 
     messages = document.createElement 'div'
     messages.id = 'wtp-messages'
-    messages.className = 'wtp-shown'
+    messages.className = 'wtp-hidden'
     box.appendChild messages
 
     toggle = document.createElement 'p'
     toggle.id = 'wtp-toggle'
     toggle.onclick = toggleMesgBox
-    toggle.innerHTML = 'Hide'
+    toggle.innerHTML = 'Show'
 
     box.appendChild toggle
-
 
 # and a function to toggle wtp-box display
 toggleMesgBox = ->
