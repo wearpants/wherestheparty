@@ -1,0 +1,26 @@
+#wtp-box {
+    position: fixed;
+    z-index:1;
+    top:15px;
+    left:15px;
+    background-color: lightblue;
+    font-size: small;
+    padding: 5px;
+}
+
+#wtp-messages {
+    background-color: white;
+}
+
+#wtp-toggle {
+    margin: 0;
+
+}
+.wtp-shown {
+    display:block;
+}
+
+.wtp-hidden {
+    display:none;
+}
+
