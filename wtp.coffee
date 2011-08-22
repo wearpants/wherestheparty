@@ -29,6 +29,37 @@ bindAnchors = ->
                 return false
             false)
 
+# make a nice container for wtp-messages
+makeMesgBox = ->
+    body = document.getElementsByTagName('body').item(0)
+    box = document.createElement 'div'
+    box.id = 'wtp-box'
+    body.appendChild box
+
+    messages = document.createElement 'div'
+    messages.id = 'wtp-messages'
+    messages.className = 'wtp-shown'
+    box.appendChild messages
+
+    toggle = document.createElement 'p'
+    toggle.id = 'wtp-toggle'
+    toggle.onclick = toggleMesgBox
+    toggle.innerHTML = 'Hide'
+
+    box.appendChild toggle
+
+
+# and a function to toggle wtp-box display
+toggleMesgBox = ->
+    messages = document.getElementById('wtp-messages')
+    toggle = document.getElementById 'wtp-toggle'
+    if toggle.innerHTML == 'Hide'
+        messages.className = 'wtp-hidden'
+        toggle.innerHTML = 'Show'
+    else
+        messages.className = 'wtp-shown'
+        toggle.innerHTML = 'Hide'
+
 # display a message to div#wtp-messages and console.log
 showMesg = (msg...) ->
     m = if msg.length then msg[0] else ""
@@ -95,6 +126,7 @@ install = ->
             me.root = root
 
     bindAnchors()
+    makeMesgBox()
     showMesg 'Welcome to <a href=http://mirrorparty.org>WTP</a>'
 
 window.addEventListener('load', install, false)
