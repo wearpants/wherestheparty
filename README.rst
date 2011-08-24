@@ -124,9 +124,9 @@ Anonymization
 +++++++++++++
 To protect content authors, WTP can optionally purge identifying metadata from content (EXIF, PDF author, etc.).
 
-========================
-Social Mirroring
-========================
+=================================
+mirrorparty.org: Social Mirroring
+=================================
 mirrorparty.org is a website to facilitate the matching of content with volunteer hosts. Volunteers sign up, specify how much and what kind of content they want to host, and provide login credentials (rsync, (s)ftp, S3, etc.) for a webserver. mirrorparty.org will periodically scan `The Pirate Bay`_ and other BitTorrent search engines for specially tagged content (`partywithme`). Such torrents will be automatically downloaded, their content extracted and then transformed to add the necessary JavaScript, keys and signatures. The resultant party will be divided into appropriately-sized portions and  uploaded to volunteer hosts. Mirror lists on existing hosts will be updated periodically.
 
 As the website is highly likely to be blocked, its use is entirely optional. However, as content creators need access to BitTorrent, not the site itself, this problem is somewhat mitigated.
