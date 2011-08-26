@@ -13,6 +13,8 @@ WTP consists of software tools for building mirror networks and a website for ma
 :mailing list: http://groups.google.com/group/wherestheparty
 :irc: #mirrorparty on irc.freenode.org
 
+Demo site at http://oppressedistan.com
+
 ===============
 Problems Solved
 ===============
