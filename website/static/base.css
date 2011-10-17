@@ -39,7 +39,7 @@ div#footer{
 #container {
    float: left;
    width: 100%;
-   margin-right: -310px;
+   margin-right: -320px;
    margin-bottom: 2em;
 }  
 
@@ -49,7 +49,7 @@ div#sidebar {
 }
 
 div#content {
-   margin-right: 310px;
+   margin-right: 320px;
 }
 
 
