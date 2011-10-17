@@ -15,11 +15,18 @@ a:link {
    color: #73BBDA;
 }
 
-div#content {
+div#wrapper {
    padding: 2em 2em;
-   overflow: auto;   
+
    max-width: 1400px;   
    min-width: 940px;
+}
+
+#container {
+  width: 100%;
+  float: left;
+  margin-right: -290px;
+  overflow: hidden;
 }
 
 div#sidebar {
@@ -27,14 +34,16 @@ div#sidebar {
    float:right;
 }
 
-div#bodyblock {
-   overflow: auto;
-   max-width: 1000px;
-   min-width: 700px;
-   margin-right: 1em;
+div#content {
+   margin-right: 290px;
+   background-color: #383636;
+   padding: 1em 1em;
+   border-radius: 5px;
+   margin-top: 1em;
 }
 
-/* body items */
+
+/* content items */
 div#mainblock {
    background-color: #383636;
    padding: 1em 1em;   
@@ -59,12 +68,19 @@ img#mainimg {
    border-radius: 5px;
 }
 
-div#commentblock {
+div#comments {
    background-color: #383636;
    padding: 1em 1em;
    border-radius: 5px;
    margin-top: 1em;
 }
+
+div#disqus_thread {
+   background-color: #DDDDDD;
+   color: black;
+   padding: 0.25em 1em .5em 1em;
+   border-radius: 5px;
+}   
 
 /* sidebar items */
 
