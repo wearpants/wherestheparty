@@ -15,16 +15,32 @@ a:link {
    color: #73BBDA;
 }
 
-div#wrapper {
-   padding: 2em 2em;
+div#page {
+   padding: 0em 2em 1em 2em;
    max-width: 1400px;   
    min-width: 940px;
+}
+
+div#header{
+}
+
+div#wrapper{
+   margin-bottom: 3em;
+}
+
+div#footer{
+   display: none;   
+   background-color: #383636;
+   padding: 1em;
+   clear: both;
+   border-radius: 5px;
 }
 
 #container {
    float: left;
    width: 100%;
-   margin-right: -290px;
+   margin-right: -310px;
+   margin-bottom: 2em;
 }  
 
 div#sidebar {
@@ -33,15 +49,7 @@ div#sidebar {
 }
 
 div#content {
-   margin-right: 290px;
-}
-
-div#footer{
-   clear: both;
-   width: 100%;
-   background-color: red;
-   padding: 1em;
-   margin-top: 3em;
+   margin-right: 310px;
 }
 
 
@@ -74,7 +82,7 @@ div#comments {
    background-color: #383636;
    padding: 1em 1em;
    border-radius: 5px;
-   margin-top: 1em;
+   margin-top: 2em;
 
 }
 
@@ -87,6 +95,13 @@ div#disqus_thread {
 
 /* sidebar items */
 
+form#paypalform {
+   padding: 1em;
+   background-color: #383636;
+   margin-top: 2em;
+   border-radius: 5px;
+}
+
 form#paypalform input[type="image"] {
    display: block;
    padding: 10px;
@@ -94,14 +109,31 @@ form#paypalform input[type="image"] {
    margin-right: auto;
 }
 
+div#googledocsform {
+   padding:  1em 0em 1em 1em;
+   background-color: #383636;
+   border-radius: 5px;
+   margin-top: 2em;
+}
+
+div#googledocsform > iframe {
+   overflow: hidden;
+   border-radius: 5px;      
+   border-width: 5px; 
+   border-style: solid;
+   border-color: #FFFFFF;  
+   margin: 0;   
+   width: 246px;
+   height: 246px; 
+}
+
 div.twtr-doc {
-   padding: 0em 1em;
+   padding: 0em 1em 0em 1em;
 }
 
 div.twtr-widget {
    margin-top: 1.3em;
-   padding-left: 1em;
-   padding-right: 1em
-
+   padding-left: 0em;
+   padding-right: 0em
 }
 
