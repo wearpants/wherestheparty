@@ -16,25 +16,30 @@ a:link {
 }
 
 div#content {
-   padding: 2em 3em;
-   max-width: 1200px;
+   padding: 2em 2em;
+   overflow: auto;   
+   max-width: 1400px;   
+   min-width: 940px;
+}
+
+div#sidebar {
+   width: 290px;
+   float:right;
 }
 
 div#bodyblock {
-   overflow:auto;
-   min-width: 768px;
+   overflow: auto;
+   max-width: 1000px;
+   min-width: 700px;
+   margin-right: 1em;
 }
 
+/* body items */
 div#mainblock {
    background-color: #383636;
    padding: 1em 1em;   
    margin-top: 1em;
-   margin-bottom: 1em;
    border-radius: 5px;
-   float: left;
-   clear: both;
-   width: 65%;
-   margin-right: 1.5em;
 }
 
 div#maintext {
@@ -54,16 +59,30 @@ img#mainimg {
    border-radius: 5px;
 }
 
+div#commentblock {
+   background-color: #383636;
+   padding: 1em 1em;
+   border-radius: 5px;
+   margin-top: 1em;
+}
+
+/* sidebar items */
+
+form#paypalform input[type="image"] {
+   display: block;
+   padding: 10px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
 div.twtr-doc {
    padding: 0em 1em;
 }
 
 div.twtr-widget {
    margin-top: 1.3em;
+   padding-left: 1em;
+   padding-right: 1em
+
 }
 
-div#commentblock {
-   background-color: #383636;
-   padding: .5em 1em;
-   border-radius: 5px;
-}

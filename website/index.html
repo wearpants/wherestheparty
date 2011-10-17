@@ -5,7 +5,7 @@
 <title>Where's the Party? : mirrorparty.org</title>
 <meta name="generator" content="Bluefish 2.0.2" />
 <meta name="author" content="Peter Fein" />
-<meta name="date" content="2011-10-16T17:21:53-0500" />
+<meta name="date" content="2011-10-17T09:06:23-0500" />
 <meta name="copyright" content=""/>
 <meta name="keywords" content=""/>
 <meta name="description" content=""/>
@@ -16,6 +16,21 @@
 <link href='/static/normalize.css' rel='stylesheet'type='text/css' />
 <link href="/static/base.css" rel="stylesheet" type="text/css"/>
 <link href="/static/menu/menu_style.css" rel="stylesheet" type="text/css" />
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'mirrorparty'; // required: replace example with your forum shortname
+    var disqus_developer = 1;
+    var disqus_identifer = 'mirrorparty-global-comments';   
+    var disqus_url = 'http://mirrorparty.org/';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
 </head>
 <body>
 <div id="content">
@@ -36,26 +51,7 @@
 </div>
 
 
-<div id="bodyblock">
-
-<div id="mainblock">
-   <div id="XXX">
-   <img id="mainimg" src="/static/mirrorparty_crowd.png" width="350" alt="a crowd of partying mirrors"/>
-   </div>
-   <div id="maintext">
-      <h2>Join the Party</h2>
-      <p>A distributed censorship resistant social mirror network using pure Javascript and volunteer hosts.</p>
-      <p>Where's the Party is a scalable, censorship-resistant mirror network for the web. It aims to make mirroring more accessible for both clients and hosts, allowing several orders of magnitude greater participation. WTP is different from previous mirroring efforts because it works entirely with software users already have - *no* additional packages need to be installed for either clients or hosts.</p>
-      <p>
-      <a href="ajldsfjds;" >a link</a>
-
-      WTP consists of software tools for building mirror networks and a website for matching content with volunteer hosts. It operates by using JavaScript in the browser to reconstruct the namespace that is a website from content hosted on multiple servers.
-   </p>
-   
-   </div>
-</div>
-
-<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<div id="sidebar">
 <script>
 new TWTR.Widget({
   version: 2,
@@ -89,25 +85,40 @@ new TWTR.Widget({
   }
 }).render().start();
 </script>
+
+<form id="paypalform" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="ZUTH8U3M6YM4S">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+</div>
+
+<div id="bodyblock">
+
+<div id="mainblock">
+   <div id="XXX">
+   <img id="mainimg" src="/static/mirrorparty_crowd.png" width="350" alt="a crowd of partying mirrors"/>
+   </div>
+   <div id="maintext">
+      <h2>Join the Party</h2>
+      <p>A distributed censorship resistant social mirror network using pure Javascript and volunteer hosts.</p>
+      <p>Where's the Party is a scalable, censorship-resistant mirror network for the web. It aims to make mirroring more accessible for both clients and hosts, allowing several orders of magnitude greater participation. WTP is different from previous mirroring efforts because it works entirely with software users already have - *no* additional packages need to be installed for either clients or hosts.</p>
+      <p>
+      <a href="ajldsfjds;" >a link</a>
+
+      WTP consists of software tools for building mirror networks and a website for matching content with volunteer hosts. It operates by using JavaScript in the browser to reconstruct the namespace that is a website from content hosted on multiple servers.
+   </p>
+   
+   </div>
 </div>
 
 <div id="commentblock">
 <div id="disqus_thread"></div>
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = 'mirrorparty'; // required: replace example with your forum shortname
-    var disqus_developer = 1;
-    var disqus_identifer = 'mirrorparty-global-comments';   
-
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
 </div>
 
 </div>
