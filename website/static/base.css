@@ -17,7 +17,6 @@ a:link {
 
 div#wrapper {
    padding: 2em 2em;
-
    max-width: 1400px;   
    min-width: 940px;
 }
@@ -26,7 +25,6 @@ div#wrapper {
   width: 100%;
   float: left;
   margin-right: -290px;
-  overflow: hidden;
 }
 
 div#sidebar {
@@ -68,11 +66,12 @@ img#mainimg {
    border-radius: 5px;
 }
 
-div#comments {
+/*div#comments {
    background-color: #383636;
    padding: 1em 1em;
    border-radius: 5px;
    margin-top: 1em;
+
 }
 
 div#disqus_thread {
@@ -80,7 +79,7 @@ div#disqus_thread {
    color: black;
    padding: 0.25em 1em .5em 1em;
    border-radius: 5px;
-}   
+}*/  
 
 /* sidebar items */
 
