@@ -1,4 +1,4 @@
-   body {
+body {
 	background-color: black;
    color: #DDDDDD;
 }
@@ -22,31 +22,35 @@ div#wrapper {
 }
 
 #container {
-  width: 100%;
-  float: left;
-  margin-right: -290px;
-}
+   float: left;
+   width: 100%;
+   margin-right: -290px;
+}  
 
 div#sidebar {
    width: 290px;
-   float:right;
+   float: right;
 }
 
 div#content {
    margin-right: 290px;
-   background-color: #383636;
-   padding: 1em 1em;
-   border-radius: 5px;
-   margin-top: 1em;
+}
+
+div#footer{
+   clear: both;
+   width: 100%;
+   background-color: red;
+   padding: 1em;
+   margin-top: 3em;
 }
 
 
 /* content items */
-div#mainblock {
+div#main{
    background-color: #383636;
-   padding: 1em 1em;   
-   margin-top: 1em;
+   padding: 1em 1em;
    border-radius: 5px;
+   margin-top: 1em;
 }
 
 div#maintext {
