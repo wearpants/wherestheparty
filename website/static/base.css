@@ -1,0 +1,69 @@
+   body {
+	background-color: black;
+   color: #DDDDDD;
+}
+
+a:hover {
+   color: #4DAFDA;
+}
+
+a:visited {
+   color: #1986b5;
+}
+
+a:link {
+   color: #73BBDA;
+}
+
+div#content {
+   padding: 2em 3em;
+   max-width: 1200px;
+}
+
+div#bodyblock {
+   overflow:auto;
+   min-width: 768px;
+}
+
+div#mainblock {
+   background-color: #383636;
+   padding: 1em 1em;   
+   margin-top: 1em;
+   margin-bottom: 1em;
+   border-radius: 5px;
+   float: left;
+   clear: both;
+   width: 65%;
+   margin-right: 1.5em;
+}
+
+div#maintext {
+   background-color: #DDDDDD;
+   color: black;
+   padding: 0.25em 1em .5em 1em;
+   border-radius: 5px;
+}
+
+img#mainimg {
+   display: block;   
+   background-color: black;
+   padding: 30px;
+   margin-bottom: 1em;
+   margin-left: auto;
+   margin-right: auto;
+   border-radius: 5px;
+}
+
+div.twtr-doc {
+   padding: 0em 1em;
+}
+
+div.twtr-widget {
+   margin-top: 1.3em;
+}
+
+div#commentblock {
+   background-color: #383636;
+   padding: .5em 1em;
+   border-radius: 5px;
+}
