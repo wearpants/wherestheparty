@@ -83,7 +83,6 @@ div#comments {
    padding: 1em 1em;
    border-radius: 5px;
    margin-top: 2em;
-   font-size: 75%;
 
 }
 
