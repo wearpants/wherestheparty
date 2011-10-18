@@ -66,6 +66,7 @@ div#maintext {
    color: black;
    padding: 0.25em 1em .5em 1em;
    border-radius: 5px;
+   line-height: 150%;
 }
 
 img#mainimg {
