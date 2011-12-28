@@ -19,11 +19,11 @@ Demo site at http://oppressedistan.com
 ===============
 Problems Solved
 ===============
-Where's the Party enables the distribution of static HTML content to users on censored networks. It aims to be resistant against several forms of censorship: host/IP blocking, content-aware filtering (DPI) and legal takedowns (DMCA).
+Where's the Party enables the distribution of static HTML content to users on censored networks. It aims to be resistant against several forms of censorship: host/IP blocking, content-aware filtering (DPI) and juridical takedowns.
 
 The extremely low rates of uptake for browser plugins and other installable software is well known. At the height of the Egypt crisis, usage of `TOR skyrocketed`_ - to just over 2000 users, out of a population of 83 million. Peer-to-peer solutions such as BitTorrent often fail the "grandmother test", restricting access to the technologically savvy. For clients, WTP leverages the familiar web browser that users already have installed. It will support all browsers back through IE6 - a particular benefit in China, where `IE6 usage rates`_ remain as high as 35%.
 
-Working on the `streisand.me`_ mirror project, we observed similar problems for volunteers who wish to host a mirror. Apache configuration requires a fair degree of technological ability, and is simply not available for many popular hosting platforms (S3, Dropbox). The sheer size of content, often including videos, is an obstacle to hosting. For example, the `HBGary leaks site`_ was 9 GB in size. While not enormous, a tarball this large will take several hours to download and may exceed the capacity of many hosting plans. WTP makes mirroring easier by serving content from any directory on a dumb web host. An individual host may mirror only a portion of the total content.
+Working on the `streisand.me`_ mirror project, we observed similar problems for volunteers who wish to host a mirror. Apache configuration requires a fair degree of technological ability, and is simply not available for many popular hosting platforms (S3, Dropbox). The sheer size of content, often including videos, is an obstacle to hosting. For example, a prominent `leaks site`_ was 9 GB in size. While not enormous, a tarball this large will take several hours to download and may exceed the capacity of many hosting plans. WTP makes mirroring easier by serving content from any directory on a dumb web host. An individual host may mirror only a portion of the total content.
 
 =====================
 Problems Unsolved
@@ -41,7 +41,7 @@ WTP is resistant to a variety of different threats. As an entirely open system, 
 
 Legal challenges
 ++++++++++++++++
-Censors may cause content to be removed from a host using the legal system, such as `DMCA takedown notices`_.  WTP makes such takedowns impossible or costly, by utilizing a large number of hosts in multiple legal jurisdictions (some of which may be immune to takedowns). Attempts at domain seizure face similar challenges, and are further complicated by the co-hosting of targeted and innocuous content.
+Censors may cause content to be removed from a host using the legal system, such as `takedown notices`_.  WTP makes such takedowns impossible or costly, by utilizing a large number of hosts in multiple legal jurisdictions (some of which may be immune to takedowns). Attempts at domain seizure face similar challenges, and are further complicated by the co-hosting of targeted and innocuous content.
 
 Hostname & IP blocking
 ++++++++++++++++++++++
@@ -180,8 +180,8 @@ Open Questions/Issues
 .. _`TOR skyrocketed`: https://blog.torproject.org/blog/recent-events-egypt
 .. _`IE6 usage rates`: http://micgadget.com/11633/why-the-chinese-still-favour-internet-explorer-6/
 .. _`streisand.me`: http://streisand.me/
-.. _`HBGary leaks site`: http://hbgary.anonleaks.ch/
-.. _`DMCA takedown notices`: http://en.wikipedia.org/wiki/Online_Copyright_Infringement_Liability_Limitation_Act#Takedown_example
+.. _`leaks site`: http://hbgary.anonleaks.ch/
+.. _`takedown notices`: http://en.wikipedia.org/wiki/Online_Copyright_Infringement_Liability_Limitation_Act#Takedown_example
 .. _`deep packet inspection`: http://en.wikipedia.org/wiki/Deep_packet_inspection
 .. _`MHTML`: http://www.phpied.com/mhtml-when-you-need-data-uris-in-ie7-and-under/
 .. _`pdftohtml`: http://pdftohtml.sourceforge.net
