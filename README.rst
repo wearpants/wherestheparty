@@ -6,6 +6,7 @@ Mirror Party is a scalable, censorship-resistant mirror network for the web. It 
 
 Mirror Party consists of software tools for building mirror networks and a website for matching content with volunteer hosts. It operates by using JavaScript in the browser to reconstruct the namespace that is a website from content hosted on multiple servers.
 
+:homepage: `mirrorparty.org <http://mirrorparty.org>`__
 :author: Peter Fein
 :email: pete@wearpants.org
 :twitter: `@petewearspants <http://twitter.com/petewearspants>`__
@@ -15,3 +16,4 @@ Mirror Party consists of software tools for building mirror networks and a websi
 :license: BSD
 
 For more information, see the `wiki <https://github.com/pfein/wherestheparty/wiki>`__. Demo site at http://oppressedistan.com
+
