@@ -5,7 +5,7 @@
 <title>Donate : mirrorparty.org</title>
 <meta name="generator" content="Bluefish 2.0.2" />
 <meta name="author" content="Peter Fein" />
-<meta name="date" content="2011-10-18T15:22:18-0500" />
+<meta name="date" content="2012-02-13T00:11:13-0600" />
 <meta name="copyright" content=""/>
 <meta name="keywords" content=""/>
 <meta name="description" content=""/>
@@ -20,7 +20,6 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
     var disqus_shortname = 'mirrorparty'; // required: replace example with your forum shortname
-    var disqus_developer = 1;
     var disqus_identifer = 'mirrorparty-global-comments';   
     var disqus_url = 'http://mirrorparty.org/';
 
@@ -35,16 +34,17 @@
 <body>
 <div id="page">
 <div id="header">
-<h1>Where's the Party? : mirrorparty.org</h1>
+<h1>Mirror Party</h1>
 
 <div id="menucontainer">
 	<div id="menunav">
 		<ul>
-			<li><a href="/" target="_self" title="About"><span>About</span></a></li>
+			<li><a href="/" target="_self" title="About" class="current"><span>About</span></a></li>
+         <li><a href="http://github.com/pfein/wherestheparty/wiki" target="_self" title="Documentation"><span>Documentation</span></a></li>
 			<li><a href="http://oppressedistan.com" target="_blank" title="Demo"><span>Demo</span></a></li>
 			<li><a href="http://www.youtube.com/watch?v=nDkovZlLmgg" target="_blank" title="Video"><span>Video</span></a></li>
 			<li><a href="http://github.com/pfein/wherestheparty" target="_self" title="Source Code"><span>Source Code</span></a></li>				
-			<li><a href="donate" target="_self" title="Donate" class="current"><span>Donate</span></a></li>
+			<li><a href="donate" target="_self" title="Donate"><span>Donate</span></a></li>
 			<li><a href="contact" target="_self" title="Contact"><span>Contact</span></a></li>
 		</ul>
 	</div>
@@ -81,7 +81,7 @@
 new TWTR.Widget({
   version: 2,
   type: 'search',
-  search: 'mirrorparty OR from:mirrorparty',
+  search: '#mirrorparty OR from:mirrorparty',
   interval: 30000,
   title: '',
   subject: '@MirrorParty',
