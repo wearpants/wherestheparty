@@ -15,6 +15,14 @@ a:link {
    color: #73BBDA;
 }
 
+li {
+   margin: 1em 0;  
+}
+
+ul, ol {
+   padding: 0 0 0 30px;  
+}
+
 div#page {
    padding: 0em 2em 1em 2em;
    max-width: 1300px;   
