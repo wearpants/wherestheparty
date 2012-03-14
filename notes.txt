@@ -1,0 +1,4 @@
+- Are there other ways of getting content into mirrorparty.org? Searching for tags/links/named files on Google, file hosting services or links on pastebins perhaps?
+- mirrorparty.org could generate tarballs on demand for users who do not want to supply login credentials. This makes updating their mirror lists more difficult, but maybe a small mirror-list-update script could be provided.
+- Should mirrorparty.org have a keypair so that tarballs can be transmitted to it securely? Motivation is to prevent content filtering on upload to a file hosting site.
+- Things may simplified by with a single page app - using a single entry point URI on each mirror and referencing individual documents using anchors (a la Gmail or Twitter). Mirror hopping (switching between entry points on several mirrors) is desirable here, as the browser's back button can be used to find a working mirror if the current one goes down. May also help with memory consumption/leak issues.
