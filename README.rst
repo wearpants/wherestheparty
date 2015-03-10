@@ -1,3 +1,5 @@
+*THIS PROJECT IS PRETTY MUCH DEAD, THANKS FOR ALL THE FISH*
+
 *******************
 Mirror Party
 *******************
